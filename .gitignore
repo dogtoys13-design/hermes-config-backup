@@ -1,0 +1,34 @@
+# Hermes Agent 配置备份 - 排除项
+
+# --- 缓存和临时文件 ---
+cache/
+bootstrap-cache/
+ffmpeg_tmp/
+*.wav *.mp3 *.mp4 *.mpg *.avi
+*.zip *.7z *.gz *.rar
+Thumbs.db .DS_Store
+
+# --- 第三方工具和库 ---
+AI-outbrain-2.0/
+ffmpeg-gyan.7z ffmpeg.zip
+bin/
+gateway-service/
+node_modules/
+
+# --- 运行锁文件 ---
+*.lock
+*.pid
+*.log
+
+# --- 环境文件 ---
+.env
+
+# --- 检查文件 ---
+.update_check
+channel_directory.json
+gateway_state.json
+gateway.lock
+gateway.pid
+
+# --- 配置文件备份 ---
+config.yaml.bak.*
