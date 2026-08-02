@@ -18,7 +18,7 @@
 §
 模型切换：切专业版→hermes config set model.default 'deepseek/deepseek-pro' 切快速版→'deepseek-v4-flash'
 §
-OCR识图：scripts/ocr_image.py调智谱GLM-4.6V-Flash 不用Hermes内置auxiliary.vision(400错误) 429限流重试。
+OCR识图：scripts/ocr_image.py调智谱GLM-4.6V-Flash 不用Hermes内置auxiliary.vision(400错误) 429限流重试。语音转写不用智谱GLM-4-Voice(长音频分段失败+会脑补润色)，继续Whisper tiny+AI语境纠错。
 §
 RULES.md 在_system(系统)为完整规则备份，不每次读取。改规则时同步Memory+RULES.md。
 §
@@ -51,3 +51,5 @@ Ingest关联：新卡片生成后全局检索Wiki，找跨领域关联，建双�
 图文素材处理：DOCX等图文文件提取时，图片嵌入MD文件内（![]路径），单独images_xxx文件夹存图片原文件，文字和图片穿插排版同Word。
 §
 同主题追加：收到与已有Wiki卡片同主题的新素材时，直接更新追加到旧卡片末尾，不另建新卡。
+§
+图文素材(DOCX等)：文字+图片嵌入同一MD文件，图片存配套images_xxx/文件夹，MD内用相对路径![名称](images_xxx/xxx.png)引用，Obsidian中图文穿插排版。
