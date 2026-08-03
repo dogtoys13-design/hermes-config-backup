@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+"""语音转写：SiliconFlow 云端ASR（TeleSpeechASR为主，SenseVoice限流自动切换备用）"""
+import sys, os, json, requests, time, subprocess
+
+API_KEY = "sk-fxthwiopemembtcicvarwwplyngfyxqxxycyvvkjujeebcsw"
+API_URL = "https://api.siliconflow.cn/v1/audio/transcriptions"
+PRIMARY_MODEL = "FunAudioLLM/SenseVoiceSmall"  # 日常主力
+FALLBACK_MODEL = "TeleAI/TeleSpeechASR"        # 备选：方言/嘈杂低音质时切换
+FFMPEG = r"C:\Users\Administrator\AppData\Local\hermes\bin\ffmpeg.exe"
+
+def transcribe(audio_path, language="zh"):
+    """转写音频文件，自动转wav 16kHz，主模型失败自动切换备用"""
+    # 转wav
+    wav_tmp = audio_path + "_tmp.wav"
+    subprocess.run([FFMPEG, "-y", "-i", audio_path, "-ar", "16000", "-ac", "1",
+                    "-c:a", "pcm_s16le", wav_tmp], capture_output=True, check=True)
+    
+    headers = {"Authorization": f"Bearer {API_KEY}"}
+    with open(wav_tmp, "rb") as f:
+        files = {"file": (os.path.basename(wav_tmp), f, "audio/wav")}
+        data = {"model": PRIMARY_MODEL, "language": language, "response_format": "json"}
+        
+        # 主模型尝试
+        try:
+            resp = requests.post(API_URL, headers=headers, files=files, data=data, timeout=180)
+            if resp.status_code == 200:
+                os.remove(wav_tmp)
+                return resp.json().get("text", "")
+            elif resp.status_code in (429, 500, 502, 503):
+                # 限流/服务错误 → 切换备用模型
+                print(f"⚠️ 主模型({PRIMARY_MODEL})限流({resp.status_code})，切换备用...")
+                data["model"] = FALLBACK_MODEL
+                # 重新打开文件（文件指针已读完）
+                with open(wav_tmp, "rb") as f2:
+                    files2 = {"file": (os.path.basename(wav_tmp), f2, "audio/wav")}
+                    resp2 = requests.post(API_URL, headers=headers, files=files2, data=data, timeout=180)
+                    if resp2.status_code == 200:
+                        os.remove(wav_tmp)
+                        return resp2.json().get("text", "")
+                    raise Exception(f"备用模型也失败 {resp2.status_code}: {resp2.text[:200]}")
+            else:
+                raise Exception(f"转写失败 {resp.status_code}: {resp.text[:200]}")
+        except requests.exceptions.Timeout:
+            # 超时也切备用
+            print(f"⚠️ 主模型超时，切换备用...")
+            data["model"] = FALLBACK_MODEL
+            with open(wav_tmp, "rb") as f2:
+                files2 = {"file": (os.path.basename(wav_tmp), f2, "audio/wav")}
+                resp2 = requests.post(API_URL, headers=headers, files=files2, data=data, timeout=180)
+                if resp2.status_code == 200:
+                    os.remove(wav_tmp)
+                    return resp2.json().get("text", "")
+                raise Exception(f"备用模型也失败 {resp2.status_code}: {resp2.text[:200]}")
+    
+    os.remove(wav_tmp)
+
+if __name__ == "__main__":
+    path = sys.argv[1]
+    t0 = time.time()
+    text = transcribe(path)
+    elapsed = time.time() - t0
+    print(f"✅ 转写完成 ({elapsed:.0f}秒, {len(text)}字)")
+    print(text)
