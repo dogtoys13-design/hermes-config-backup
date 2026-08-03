@@ -5,8 +5,8 @@
 # ============================================================
 
 VAULT="/c/Vault"
-RAW="$VAULT/00_Raw"
-WIKI="$VAULT/01_Wiki"
+RAW="$VAULT/Raw（原始资料）"
+WIKI="$VAULT/Wiki（知识卡片）"
 LOG="$VAULT/log.md"
 TODAY=$(date '+%Y-%m-%d')
 NOW=$(date '+%Y-%m-%d %H:%M')
