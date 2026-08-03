@@ -14,11 +14,11 @@
 §
 音频转写SiliconFlow云端ASR(scripts/transcribe_siliconflow.py)：主力SenseVoiceSmall，备选TeleSpeechASR(方言/嘈杂时切换)，限流自动切。Whisper tiny(transcribe_audio.py)仅备用。
 §
-抖音流程：链接→下载→转写(SenseVoice云端)→纠错精稿→推审核→点头入库→待审核放待审核文件夹。
+抖音流程：链接→下载→云端转写(SenseVoice主力/TeleSpeechASR备选)→纠错精稿→存Raw→逐条推卡片审核→点头入库。素材逐条审核不批量。
 §
 模型切换：切专业版→hermes config set model.default 'deepseek/deepseek-pro' 切快速版→'deepseek-v4-flash'
 §
-OCR识图：scripts/ocr_image.py调智谱GLM-4.6V-Flash 不用Hermes内置auxiliary.vision(400错误) 429限流重试。语音转写不用智谱GLM-4-Voice(长音频分段失败+会脑补润色)，继续Whisper tiny+AI语境纠错。
+OCR识图：scripts/ocr_image.py调智谱GLM-4.6V-Flash 不用Hermes内置auxiliary.vision(400错误) 429限流重试。语音转写不用智谱GLM-4-Voice(长音频分段失败+会脑补润色)，统一走SiliconFlow云端ASR。
 §
 RULES.md 在_system(系统)为完整规则备份，不每次读取。改规则时同步Memory+RULES.md。
 §
@@ -53,3 +53,7 @@ Ingest关联：新卡片生成后全局检索Wiki，找跨领域关联，建双�
 同主题追加：收到与已有Wiki卡片同主题的新素材时，直接更新追加到旧卡片末尾，不另建新卡。
 §
 图文素材(DOCX等)：文字+图片嵌入同一MD文件，图片存配套images_xxx/文件夹，MD内用相对路径![名称](images_xxx/xxx.png)引用，Obsidian中图文穿插排版。
+§
+抖音脚本已修复：uuid唯一临时文件+同作者同日自动加序号防覆盖。
+§
+全嫂在美国账号的视频，说话人通常是全哥，全嫂只是录制发布者，勿混淆。
