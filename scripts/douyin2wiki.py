@@ -31,12 +31,12 @@ def process_douyin(url):
                    capture_output=True, check=True)
     os.remove(video_path)
     
-    # --- 2. 转写 ---
+    # --- 2. 转写（云端SenseVoice，替代本地Whisper） ---
     t0 = time.time()
-    model = whisper.load_model("tiny", device="cpu")
-    result = model.transcribe(wav_path, language="zh", beam_size=5)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from transcribe_siliconflow import transcribe
+    text = transcribe(wav_path)
     elapsed = time.time() - t0
-    text = result["text"].strip()
     os.remove(wav_path)
     
     # --- 3. 生成知识卡片 ---
@@ -44,12 +44,12 @@ def process_douyin(url):
     date = time.strftime("%Y-%m-%d")
     
     # 简单自动分类（根据关键词）
-    domain = "副业"
+    domain = "投资"
     subdomain = "投资理念"
     if any(k in text for k in ["期权", "put", "call", "卖铺", "卖靠", "行权"]):
-        domain, subdomain = "副业", "实操复盘"
+        domain, subdomain = "投资", "实操复盘"
     elif any(k in text for k in ["代码", "铺货", "软件", "自动化"]):
-        domain, subdomain = "主业", "AI铺货"
+        domain, subdomain = "电商", "AI应用"
     elif any(k in text for k in ["教育", "学习", "人生", "规划", "运动"]):
         domain, subdomain = "个人", "学习方法"
     
@@ -57,14 +57,14 @@ def process_douyin(url):
 
 **来源：** 抖音 @{author}
 **时长：** {duration}（{stats.get('点赞','?')}赞 / {stats.get('收藏','?')}收藏）
-**转写：** Whisper tiny | {elapsed:.0f}秒 | {len(text)}字
+**转写：** SenseVoice | {elapsed:.0f}秒 | {len(text)}字
 **日期：** {date}
 
 **📌 摘要：**
 {text[:200]}...
 
 **🏷️ 建议分类：** {domain} → {subdomain}
-**📂 入库路径：** 00_Raw/{domain}/{subdomain}/{date}-douyin-{author}.md
+**📂 入库路径：** Raw（原始资料）/{domain}/{subdomain}/{date}-douyin-{author}.md
 
 **📝 全文：**
 {text}
