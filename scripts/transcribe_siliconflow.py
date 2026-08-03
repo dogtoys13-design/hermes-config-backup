@@ -16,43 +16,44 @@ def transcribe(audio_path, language="zh"):
                     "-c:a", "pcm_s16le", wav_tmp], capture_output=True, check=True)
     
     headers = {"Authorization": f"Bearer {API_KEY}"}
-    with open(wav_tmp, "rb") as f:
-        files = {"file": (os.path.basename(wav_tmp), f, "audio/wav")}
-        data = {"model": PRIMARY_MODEL, "language": language, "response_format": "json"}
-        
-        # 主模型尝试
-        try:
-            resp = requests.post(API_URL, headers=headers, files=files, data=data, timeout=180)
-            if resp.status_code == 200:
-                os.remove(wav_tmp)
-                return resp.json().get("text", "")
-            elif resp.status_code in (429, 500, 502, 503):
-                # 限流/服务错误 → 切换备用模型
-                print(f"⚠️ 主模型({PRIMARY_MODEL})限流({resp.status_code})，切换备用...")
-                data["model"] = FALLBACK_MODEL
-                # 重新打开文件（文件指针已读完）
-                with open(wav_tmp, "rb") as f2:
-                    files2 = {"file": (os.path.basename(wav_tmp), f2, "audio/wav")}
-                    resp2 = requests.post(API_URL, headers=headers, files=files2, data=data, timeout=180)
-                    if resp2.status_code == 200:
-                        os.remove(wav_tmp)
-                        return resp2.json().get("text", "")
-                    raise Exception(f"备用模型也失败 {resp2.status_code}: {resp2.text[:200]}")
-            else:
-                raise Exception(f"转写失败 {resp.status_code}: {resp.text[:200]}")
-        except requests.exceptions.Timeout:
-            # 超时也切备用
-            print(f"⚠️ 主模型超时，切换备用...")
-            data["model"] = FALLBACK_MODEL
-            with open(wav_tmp, "rb") as f2:
-                files2 = {"file": (os.path.basename(wav_tmp), f2, "audio/wav")}
-                resp2 = requests.post(API_URL, headers=headers, files=files2, data=data, timeout=180)
-                if resp2.status_code == 200:
-                    os.remove(wav_tmp)
-                    return resp2.json().get("text", "")
-                raise Exception(f"备用模型也失败 {resp2.status_code}: {resp2.text[:200]}")
     
-    os.remove(wav_tmp)
+    def _call(model):
+        """内部：用指定模型调用一次，返回文本"""
+        with open(wav_tmp, "rb") as f:
+            files = {"file": (os.path.basename(wav_tmp), f, "audio/wav")}
+            data = {"model": model, "language": language, "response_format": "json"}
+            resp = requests.post(API_URL, headers=headers, files=files, data=data, timeout=180)
+        # with块已关闭文件句柄，此处可安全读取
+        if resp.status_code == 200:
+            return resp.json().get("text", ""), None
+        return None, resp
+    
+    # 主模型尝试
+    try:
+        text, resp = _call(PRIMARY_MODEL)
+        if text is not None:
+            os.remove(wav_tmp)
+            return text
+        if resp is not None and resp.status_code in (429, 500, 502, 503):
+            print(f"⚠️ 主模型({PRIMARY_MODEL})限流({resp.status_code})，切换备用...")
+            text, resp2 = _call(FALLBACK_MODEL)
+            if text is not None:
+                os.remove(wav_tmp)
+                return text
+            raise Exception(f"备用模型也失败 {resp2.status_code}: {resp2.text[:200]}")
+        raise Exception(f"转写失败 {resp.status_code}: {resp.text[:200]}")
+    except requests.exceptions.Timeout:
+        print(f"⚠️ 主模型超时，切换备用...")
+        text, resp2 = _call(FALLBACK_MODEL)
+        if text is not None:
+            os.remove(wav_tmp)
+            return text
+        raise Exception(f"备用模型也失败 {resp2.status_code}: {resp2.text[:200]}")
+    
+    # 兜底清理
+    if os.path.exists(wav_tmp):
+        try: os.remove(wav_tmp)
+        except: pass
 
 if __name__ == "__main__":
     path = sys.argv[1]
