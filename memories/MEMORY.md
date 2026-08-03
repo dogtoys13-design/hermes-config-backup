@@ -12,9 +12,9 @@
 §
 红线：不删改Raw、不书籍压缩单卡、不摘抄要提炼、一卡一概念、不编造来源。
 §
-音频转写Whisper tiny(CPU 6min≈7min) scripts/transcribe_audio.py去重后台通知。
+音频转写SiliconFlow云端ASR(scripts/transcribe_siliconflow.py)：主力SenseVoiceSmall，备选TeleSpeechASR(方言/嘈杂时切换)，限流自动切。Whisper tiny(transcribe_audio.py)仅备用。
 §
-抖音流程：链接→下载→转写→卡片→推审核→点头入库→待审核放 _待审核（即将审核）。
+抖音流程：链接→下载→转写(SenseVoice云端)→纠错精稿→推审核→点头入库→待审核放待审核文件夹。
 §
 模型切换：切专业版→hermes config set model.default 'deepseek/deepseek-pro' 切快速版→'deepseek-v4-flash'
 §
