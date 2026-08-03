@@ -21,11 +21,14 @@ def process_douyin(url):
     stats = info["statistics"]
     
     r = requests.get(info["video_url"], headers=info["download_headers"], timeout=120)
-    video_path = os.path.join(REVIEW_DIR, "temp_video.mp4")
+    # 用唯一临时文件名，避免并发冲突
+    import uuid
+    uid = uuid.uuid4().hex[:8]
+    video_path = os.path.join(REVIEW_DIR, f"temp_video_{uid}.mp4")
     with open(video_path, "wb") as f:
         f.write(r.content)
     
-    wav_path = os.path.join(REVIEW_DIR, "temp_audio.wav")
+    wav_path = os.path.join(REVIEW_DIR, f"temp_audio_{uid}.wav")
     subprocess.run(["ffmpeg", "-i", video_path, "-vn", "-acodec", "pcm_s16le",
                     "-ar", "16000", "-ac", "1", wav_path, "-y"],
                    capture_output=True, check=True)
@@ -70,8 +73,13 @@ def process_douyin(url):
 {text}
 """
     
-    # 保存待审核
-    review_path = os.path.join(REVIEW_DIR, f"douyin_{author}_{date}.md")
+    # 保存待审核（文件名加序号，避免同作者同日多条覆盖）
+    base = os.path.join(REVIEW_DIR, f"douyin_{author}_{date}")
+    review_path = base + ".md"
+    seq = 2
+    while os.path.exists(review_path):
+        review_path = f"{base}_{seq}.md"
+        seq += 1
     with open(review_path, "w", encoding="utf-8") as f:
         f.write(f"---\nstatus: pending\nsource: 抖音\nauthor: {author}\ndate: {date}\nurl: {url}\n---\n\n{card}\n")
     
