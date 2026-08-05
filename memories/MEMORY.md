@@ -18,7 +18,7 @@
 §
 模型切换：切专业版→hermes config set model.default 'deepseek/deepseek-pro' 切快速版→'deepseek-v4-flash'
 §
-OCR识图：scripts/ocr_image.py调智谱GLM-4.6V-Flash 不用Hermes内置auxiliary.vision(400错误) 429限流重试。语音转写不用智谱GLM-4-Voice(长音频分段失败+会脑补润色)，统一走SiliconFlow云端ASR。
+OCR识图：scripts/ocr_image.py调智谱GLM-4.6V-Flash 不用Hermes内置auxiliary.vision(400错误) 429限流重试。
 §
 RULES.md 在_system(系统)为完整规则备份，不每次读取。改规则时同步Memory+RULES.md。
 §
@@ -59,3 +59,5 @@ QQ机器人已配置(2026-08-04)：微信+QQ双平台接入。两平台独立会
 QQ/微信分工：QQ=素材投递口(手机发抖音链接方便)，只做转写→纠错→存Raw→更新待办，不推卡片不搞思辨；微信=思辨主战场，走卡片推送/思考/辨析/入库流程。两边同一知识库，微信可随时接续。
 §
 网关重启会中断cron任务(9点推送曾因此超时失败)，需手动补发。
+§
+用户会把知识库精选卡片整理成整套学习包发给朋友学习(如价值投资入门7张包)，整理时用入门友好的顺序和排版。
