@@ -4,7 +4,7 @@
 §
 红线：不删改Raw、不书籍压缩单卡、不摘抄要提炼、一卡一概念、不编造来源。
 §
-语音转写SiliconFlow(transcribe_siliconflow.py)：主力SenseVoiceSmall，备选TeleSpeechASR(方言/嘈杂)。compare_asr.py双模型对比定默认。纠错表_system/转写纠错表.md，Raw只纠错不改语句(方案A)。GLM-4-Voice禁用。
+语音转写SiliconFlow(transcribe_siliconflow.py)：主力SenseVoiceSmall，备选TeleSpeechASR(方言/嘈杂)。compare_asr.py双模型对比定默认。纠错表_system/转写纠错表.md(人名术语，Raw只纠错不改语句=方案A)。LLM语境纠错应急用llm_fix.py(DeepSeek-V4-Flash)，日常靠纠错表+做卡片时精修，不额外耗token。GLM-4-Voice禁用。
 §
 抖音流程：链接→下载→云端转写→纠错表纠错→存Raw→逐条推卡片审核→入库。素材逐条审核不批量。
 §
