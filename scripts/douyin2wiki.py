@@ -38,9 +38,16 @@ def process_douyin(url):
     t0 = time.time()
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     from transcribe_siliconflow import transcribe
+    from fix_transcript import load_corrections, correct_text
     text = transcribe(wav_path)
     elapsed = time.time() - t0
     os.remove(wav_path)
+    
+    # --- 2.5 自动纠错（专有名词纠错表） ---
+    corrections = load_corrections()
+    if corrections:
+        text = correct_text(text, corrections)
+        print(f"🔧 已按纠错表替换 {len(corrections)} 类专有名词")
     
     # --- 3. 生成知识卡片 ---
     ts = time.strftime("%Y-%m-%d %H:%M")
