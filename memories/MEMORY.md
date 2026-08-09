@@ -43,3 +43,5 @@ QQ已配置：微信+QQ双平台共享知识库。QQ=素材投递口(转写存Ra
 素材节奏：白天发来的抖音/音频先转写存Raw挂待审核，晚上阿念有空再逐条处理。卡片入库前确认source对应Raw精稿已落盘(先存Raw再删草稿)。
 §
 小红书处理：scripts/xhs2text.py，正文在图片里必须OCR。OCR降级：PaddleOCR-VL-1.5主力→DeepSeek-OCR→Qwen3-VL-8B。智谱GLM-4.6V-Flash已弃用。
+§
+LLM语境纠错(应急)：scripts/llm_fix.py走SiliconFlow DeepSeek-V4-Flash，仅转写特别烂时用；日常=纠错表+做卡片时精修，不额外跑LLM纠错。阿念已建个人价值观体系卡(2026-08-08)作北斗星，持续积累审视。
