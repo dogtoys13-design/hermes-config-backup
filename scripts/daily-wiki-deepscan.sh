@@ -19,7 +19,9 @@ echo "=========================================="
 echo ""
 echo "【1/5】扫描 Raw 原始素材..."
 RAW_COUNT=$(find "$RAW" -name "*.md" | wc -l)
-RAW_FILES=$(find "$RAW" -name "*.md" -newermt "$(date -d '7 days ago' '+%Y-%m-%d')" 2>/dev/null | sort)
+# 兼容Windows bash：用date +%s计算7天前（避免 date -d 不兼容）
+SEVEN_DAYS_AGO=$(date -d '7 days ago' '+%Y-%m-%d' 2>/dev/null || python -c "import datetime; print((datetime.date.today()-datetime.timedelta(days=7)).isoformat())")
+RAW_FILES=$(find "$RAW" -name "*.md" -newermt "$SEVEN_DAYS_AGO" 2>/dev/null | sort)
 RAW_NEW=$(echo "$RAW_FILES" | grep -c . 2>/dev/null || echo "0")
 
 echo "    📂 全部 Raw 素材: ${RAW_COUNT} 条"
@@ -64,11 +66,13 @@ done
 # === 4. 检查 Wiki 文件的双向链接 ===
 echo ""
 echo "【4/5】检查双向链接覆盖率..."
-TOTAL_WITH_LINKS=0
-find "$WIKI" -name "*.md" -not -path "*/_MOC/*" | while read -r f; do
-  LINKS=$(grep -c '\[\[.*\]\]' "$f" 2>/dev/null || echo "0")
-  echo "$LINKS"
-done | awk '{s+=$1} END {print "    总计 $s 个 [[wikilinks]]"}' 2>/dev/null
+# 统计所有出链数量（修复 $s 未定义bug）
+TOTAL_LINKS=0
+while read -r f; do
+  C=$(grep -o '\[\[.*\]\]' "$f" 2>/dev/null | wc -l)
+  TOTAL_LINKS=$((TOTAL_LINKS + C))
+done < <(find "$WIKI" -name "*.md" -not -path "*/_MOC/*")
+echo "    总计 ${TOTAL_LINKS} 个 [[wikilinks]]"
 
 # 有出链的文件数
 LINKED_FILES=$(find "$WIKI" -name "*.md" -not -path "*/_MOC/*" -exec grep -l '\[\[.*\]\]' {} \; | wc -l)
