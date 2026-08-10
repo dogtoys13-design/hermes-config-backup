@@ -6,7 +6,7 @@
 §
 语音转写SiliconFlow(transcribe_siliconflow.py)：主力SenseVoiceSmall，备选TeleSpeechASR(方言/嘈杂)。compare_asr.py双模型对比定默认。纠错表_system/转写纠错表.md(人名术语，Raw只纠错不改语句=方案A)。LLM语境纠错应急用llm_fix.py(DeepSeek-V4-Flash)，日常靠纠错表+做卡片时精修，不额外耗token。GLM-4-Voice禁用。
 §
-抖音流程：链接→下载→云端转写→纠错表纠错→存Raw→逐条推卡片审核→入库。素材逐条审核不批量。
+抖音流程：链接→下载→转写→纠错→直接存Raw(文件名带"待审-"前缀，单一存档无待审核文件夹)→晚上审核做卡片→去前缀=已入库。待审清单=扫描Raw带"待审-"前缀。
 §
 RULES.md 在_system(系统)为完整规则备份，不每次读取。改规则时同步Memory+RULES.md。
 §
@@ -40,8 +40,8 @@ QQ已配置：微信+QQ双平台共享知识库。QQ=素材投递口(转写存Ra
 §
 阿念会把知识库内容整理成发给朋友的成品(价值投资学习包/回复建议)，要可直接复制粘贴，可标注AI助理整理，入门友好排版。
 §
-素材节奏：白天发来的抖音/音频先转写存Raw挂待审核，晚上阿念有空再逐条处理。卡片入库前确认source对应Raw精稿已落盘(先存Raw再删草稿)。
+素材节奏：白天发来的抖音/音频转写后直接存Raw(带待审-前缀)，晚上阿念有空再逐条处理做卡片。
 §
 小红书处理：scripts/xhs2text.py，正文在图片里必须OCR。OCR降级：PaddleOCR-VL-1.5主力→DeepSeek-OCR→Qwen3-VL-8B。智谱GLM-4.6V-Flash已弃用。
 §
-LLM语境纠错(应急)：scripts/llm_fix.py走SiliconFlow DeepSeek-V4-Flash，仅转写特别烂时用；日常=纠错表+做卡片时精修，不额外跑LLM纠错。阿念已建个人价值观体系卡(2026-08-08)作北斗星，持续积累审视。
+阿念已建个人价值观体系卡(2026-08-08，Wiki/个人/理论)作北斗星，持续积累审视优化，做选择前对照6问。
