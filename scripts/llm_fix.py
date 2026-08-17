@@ -2,17 +2,14 @@
 """LLM语境纠错：把转写原文交给DeepSeek，根据整个对话语境纠错
 用法: python llm_fix.py <转写文件> [输出文件]
 
-⚠️ 已禁用（2026-08-17 阿念铁律）：SiliconFlow 仅限 ASR 语音转文字，
-LLM 模型未经阿念同意禁止调用。此脚本保留仅作参考，不再使用。
+✅ 已恢复（2026-08-17 阿念批准）：SiliconFlow LLM 仅限 DeepSeek 系列模型
+（deepseek-ai/*），其他模型（GLM-5.2等）禁止调用。
 """
 import sys, os, json, time
 import requests
 
-# ⚠️ 已禁用：如需重新启用，必须经阿念明确同意
-raise SystemExit("llm_fix.py 已禁用：SiliconFlow 仅限 ASR，LLM 调用需阿念同意")
-
-# SiliconFlow DeepSeek-V4-Flash（已禁用，key已作废）
-SILICONFLOW_KEY = "[DISABLED]"
+# SiliconFlow DeepSeek-V4-Flash（仅限DeepSeek系列，阿念2026-08-17批准）
+SILICONFLOW_KEY = "sk-chuortajfzvrmbszztdywonzdkiqpngbwfsfsbhjtmhttbax"
 DEEPSEEK_URL = "https://api.siliconflow.cn/v1/chat/completions"
 MODEL = "deepseek-ai/DeepSeek-V4-Flash"
 
