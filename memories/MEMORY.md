@@ -53,3 +53,5 @@ QQ已配置：微信+QQ双平台共享知识库。QQ=素材投递口(转写存Ra
 工具/模型配置偏好：免费方案优先(OCR用PaddleOCR/DeepSeek-OCR免费档)，收费仅兜底。调模型前先查价(GLM-5.2付费强模型曾扣13.88元，账单异常先查gateway日志/state.db，非本机调用可能是控制台测试或共用key，别默认揽责)。
 §
 环境：云电脑内存仅2GB(空闲常0.5GB)，禁用Playwright/Chromium等重方案。
+§
+SiliconFlow转写报402=账户余额不足，需阿念充值后重跑。
