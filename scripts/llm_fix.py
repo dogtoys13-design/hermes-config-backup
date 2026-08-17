@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 """LLM语境纠错：把转写原文交给DeepSeek，根据整个对话语境纠错
 用法: python llm_fix.py <转写文件> [输出文件]
-原理: 转写稿常有同音错字/断句混乱，LLM能结合上下文语境还原正确表达
+
+⚠️ 已禁用（2026-08-17 阿念铁律）：SiliconFlow 仅限 ASR 语音转文字，
+LLM 模型未经阿念同意禁止调用。此脚本保留仅作参考，不再使用。
 """
 import sys, os, json, time
 import requests
 
-# SiliconFlow DeepSeek-V4-Flash（与主模型同源，纠错能力强，走SiliconFlow API）
-SILICONFLOW_KEY = "sk-fxthwiopemembtcicvarwwplyngfyxqxxycyvvkjujeebcsw"
+# ⚠️ 已禁用：如需重新启用，必须经阿念明确同意
+raise SystemExit("llm_fix.py 已禁用：SiliconFlow 仅限 ASR，LLM 调用需阿念同意")
+
+# SiliconFlow DeepSeek-V4-Flash（已禁用，key已作废）
+SILICONFLOW_KEY = "[DISABLED]"
 DEEPSEEK_URL = "https://api.siliconflow.cn/v1/chat/completions"
 MODEL = "deepseek-ai/DeepSeek-V4-Flash"
 
