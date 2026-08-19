@@ -4,7 +4,7 @@
 §
 红线：不删改Raw、不书籍压缩单卡、不摘抄要提炼、一卡一概念、不编造来源。
 §
-语音转写SiliconFlow：仅限ASR语音转文字(SenseVoiceSmall主力/TeleSpeechASR备选)。LLM纠错llm_fix.py(应急备胎)可用但仅限DeepSeek系列(deepseek-ai/*)。铁律：除ASR和DeepSeek外禁用一切SiliconFlow模型，未经阿念同意不得调用(GLM-5.2误扣13.88教训)。
+语音转写SiliconFlow：仅限ASR(SenseVoiceSmall/TeleSpeechASR)。LLM纠错llm_fix.py仅限DeepSeek系列。铁律：除ASR和DeepSeek外禁用一切SiliconFlow模型，未经阿念同意不得调用(GLM-5.2扣13.88教训)。402=余额不足，需阿念充值后重跑。
 §
 抖音流程：链接→TikHub解析(付费约7厘/次，key在douyin2wiki.py，绕Argus反爬；失败降级本地四套方案:种cookie/RENDER_DATA/换UA/重定向)→下载(重试+断点续传)→转写→纠错→存Raw(待审-前缀)→晚上审核做卡片→去前缀=已入库。待审清单=扫描待审-前缀。微信渠道链接通常能过。
 §
@@ -50,8 +50,8 @@ QQ已配置：微信+QQ双平台共享知识库。QQ=素材投递口(转写存Ra
 §
 展示卡片须说明"完整卡片"或"新增部分"；升级旧卡展示完整卡(骨架+新增+思考)；织网/批量建卡入库前必须先展示内容给阿念确认，不得先写内容再问(8/18纠正)。
 §
-工具/模型配置偏好：免费方案优先(OCR用PaddleOCR/DeepSeek-OCR免费档)，收费仅兜底。调模型前先查价(GLM-5.2付费强模型曾扣13.88元，账单异常先查gateway日志/state.db，非本机调用可能是控制台测试或共用key，别默认揽责)。
+工具/模型偏好：免费优先，收费仅兑底；账单异常先查gateway日志/state.db再定责(GLM-5.2扣13.88教训)。
 §
 环境：云电脑内存仅2GB(空闲常0.5GB)，禁用Playwright/Chromium等重方案。
 §
-SiliconFlow转写报402=账户余额不足，需阿念充值后重跑。
+阿念持仓：微软/拼多多/谷歌/甲骨文。财报解读流程(已定)：财报+电话会议→AI提炼事实→阿念写5问判断→小兵辨析→存持仓档案季度对比。AI只翻译提炼不替判断。
