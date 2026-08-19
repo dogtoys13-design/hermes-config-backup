@@ -2,7 +2,7 @@
 """语音转写：SiliconFlow 云端ASR（TeleSpeechASR为主，SenseVoice限流自动切换备用）"""
 import sys, os, json, requests, time, subprocess
 
-API_KEY = "sk-chuortajfzvrmbszztdywonzdkiqpngbwfsfsbhjtmhttbax"
+API_KEY = "sk-oblkrvgfnogxovzpjhcrylgsfdoqjndunkoaqovxmwkruflz"
 API_URL = "https://api.siliconflow.cn/v1/audio/transcriptions"
 PRIMARY_MODEL = "FunAudioLLM/SenseVoiceSmall"  # 日常主力
 FALLBACK_MODEL = "TeleAI/TeleSpeechASR"        # 备选：方言/嘈杂低音质时切换
