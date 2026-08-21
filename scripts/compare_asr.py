@@ -5,7 +5,7 @@
 """
 import sys, os, time, subprocess, requests, uuid
 
-API_KEY = "sk-oblkrvgfnogxovzpjhcrylgsfdoqjndunkoaqovxmwkruflz"
+API_KEY = "CHANGE_ME_ASR_KEY"
 API_URL = "https://api.siliconflow.cn/v1/audio/transcriptions"
 FFMPEG = r"C:\Users\Administrator\AppData\Local\hermes\bin\ffmpeg.exe"
 MODELS = ["FunAudioLLM/SenseVoiceSmall", "TeleAI/TeleSpeechASR"]
