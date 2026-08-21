@@ -9,7 +9,7 @@ import sys, os, json, time
 import requests
 
 # SiliconFlow DeepSeek-V4-Flash（仅限DeepSeek系列，阿念2026-08-17批准）
-SILICONFLOW_KEY = "sk-oblkrvgfnogxovzpjhcrylgsfdoqjndunkoaqovxmwkruflz"
+SILICONFLOW_KEY = "CHANGE_ME_LLM_KEY"
 DEEPSEEK_URL = "https://api.siliconflow.cn/v1/chat/completions"
 MODEL = "deepseek-ai/DeepSeek-V4-Flash"
 
