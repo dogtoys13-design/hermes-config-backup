@@ -4,7 +4,7 @@
 §
 红线：不删改Raw、不书籍压缩单卡、不摘抄要提炼、一卡一概念、不编造来源。
 §
-SiliconFlow铁律(8/21阿念拍板)：只准ASR语音转文字(SenseVoiceSmall/TeleSpeechASR)，禁止用SiliconFlow任何LLM模型(GLM-5.2曾静默扣费16元)。key在.scripts/.siliconflow_key独立文件仅ASR运行时读，主模型DeepSeek。
+SiliconFlow铁律(8/21阿念拍板)：只准ASR语音转文字(SenseVoiceSmall/TeleSpeechASR)，禁止用SiliconFlow任何LLM模型(GLM-5.2曾静默扣费16元)。key在.scripts/.siliconflow_key独立文件仅ASR运行时读，主模型DeepSeek。余额不足(402)时脚本自动降级本地Whisper但质量差(乱码)，需提醒充值或用户转文字版。
 §
 抖音流程：链接→TikHub解析(付费约7厘/次，key在douyin2wiki.py，绕Argus反爬；失败降级本地四套方案:种cookie/RENDER_DATA/换UA/重定向)→下载(重试+断点续传)→转写→纠错→存Raw(待审-前缀)→晚上审核做卡片→去前缀=已入库。待审清单=扫描待审-前缀。微信渠道链接通常能过。
 §
