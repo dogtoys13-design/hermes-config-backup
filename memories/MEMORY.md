@@ -4,7 +4,7 @@
 §
 红线：不删改Raw、不书籍压缩单卡、不摘抄要提炼、一卡一概念、不编造来源。
 §
-SiliconFlow铁律(8/21)：只准ASR(SenseVoice/TeleSpeech)，禁一切LLM(GLM-5.2静默扣费16元)。key在.scripts/.siliconflow_key仅ASR读，主模型DeepSeek。API余额字段可能显示0与网页不同步。watch_siliconflow2.py双监控(连接+余额)抓幽灵调用。账单异常先查gateway日志/state.db。
+SiliconFlow铁律(8/21)：只准ASR(SenseVoice/TeleSpeech)，禁一切LLM，主模型DeepSeek。key在.scripts/.siliconflow_key仅ASR读。幽灵调用规律(阿念观察)：QQ消息/重连→40模型扫描+GLM-5.2，QQ静则不耗；监控watch_siliconflow2.py+守护cron(6e5ea25af3c6)至8/31。账单异常先查gateway日志/state.db。
 §
 抖音流程：链接→TikHub解析(付费约7厘/次，key在douyin2wiki.py，绕Argus反爬；失败降级本地四套方案:种cookie/RENDER_DATA/换UA/重定向)→下载(重试+断点续传)→转写→纠错→存Raw(待审-前缀)→晚上审核做卡片→去前缀=已入库。待审清单=扫描待审-前缀。微信渠道链接通常能过。
 §
@@ -49,8 +49,6 @@ QQ已配置：微信+QQ双平台共享知识库。QQ=素材投递口(转写存Ra
 阿念思考管线：随时发想法→存Raw/个人/阿念思考/(待织-前缀)→晚上整理(重合追加/新观点新建)→我补全+辨析(标注"小兵补充"，不替他定论)→织网关联。批量建卡省token：大素材读1-2次全文一次性建完放库(status:待入库)，每天逐张走流程只读单卡。
 §
 展示卡片须说明"完整卡片"或"新增部分"；升级旧卡展示完整卡(骨架+新增+思考)；织网/批量建卡入库前必须先展示给阿念确认，不得先写内容再问(8/18纠正)。加固(追加)内容同样必须完整展示确认(RULES.md十六章)。
-§
-工具/模型偏好：免费优先，收费仅兑底。
 §
 环境：云电脑内存仅2GB(空闲常0.5GB)，禁用Playwright/Chromium等重方案。
 §
