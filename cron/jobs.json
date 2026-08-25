@@ -207,15 +207,15 @@
       "schedule_display": "every 60m",
       "repeat": {
         "times": null,
-        "completed": 699
+        "completed": 700
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-26T17:57:04.746611+08:00",
-      "next_run_at": "2026-08-25T12:51:24.597999+08:00",
-      "last_run_at": "2026-08-25T10:51:20.525690+08:00",
+      "next_run_at": "2026-08-25T13:52:26.501240+08:00",
+      "last_run_at": "2026-08-25T11:52:21.223797+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -230,7 +230,52 @@
       "enabled_toolsets": null,
       "workdir": null,
       "fire_claim": null
+    },
+    {
+      "id": "6e5ea25af3c6",
+      "name": "SiliconFlow\u76d1\u63a7\u5668\u5b88\u62a4\uff08\u6bcf\u65e5\u68c0\u67e5\uff09",
+      "prompt": "\u68c0\u67e5SiliconFlow\u5e7d\u7075\u8c03\u7528\u76d1\u63a7\u5668\u662f\u5426\u5728\u8fd0\u884c\uff0c\u4e0d\u5728\u5c31\u91cd\u542f\u3002\u5177\u4f53\u64cd\u4f5c\uff1a\n1. \u8fd0\u884c\u547d\u4ee4\uff1atasklist //FI \"PID eq 7316\" 2>/dev/null\uff08\u68c0\u67e5PID 7316\u662f\u5426\u5b58\u5728\uff09\n2. \u5982\u679cPID 7316\u4e0d\u5b58\u5728\uff08\u76d1\u63a7\u5668\u505c\u4e86\uff09\uff0c\u8fd0\u884c\uff1acd ~/AppData/Local/hermes/scripts && nohup python watch_siliconflow2.py > /dev/null 2>&1 & \u91cd\u65b0\u542f\u52a8\u5b83\n3. \u7136\u540e\u8bfb\u53d6\u65e5\u5fd7\u5c3e\u90e8\u786e\u8ba4\uff1acat ~/AppData/Local/hermes/scripts/siliconflow_watch2.log | tail -5\n4. \u68c0\u67e5\u65e5\u5fd7\u91cc\u6709\u6ca1\u6709\u5f02\u5e38\u8bb0\u5f55\uff08\u672c\u673a\u8fde\u63a5/\u4f59\u989d\u51cf\u5c11\uff09\n5. \u5982\u679c\u4e00\u5207\u6b63\u5e38\uff0c\u56de\u590d\"\u76d1\u63a7\u6b63\u5e38\"\u5373\u53ef\uff08\u7b80\u77ed\uff09\uff1b\u5982\u679c\u6709\u5f02\u5e38\uff08\u6293\u5230\u5e7d\u7075\u8c03\u7528\u6216\u4f59\u989d\u5f02\u5e38\uff09\uff0c\u8be6\u7ec6\u6c47\u62a5\u7ed9\u963f\u5ff5",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "provider_snapshot": "deepseek",
+      "model_snapshot": "deepseek-v4-flash",
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 8 * * *",
+        "display": "0 8 * * *"
+      },
+      "schedule_display": "0 8 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-08-25T12:43:08.700347+08:00",
+      "next_run_at": "2026-08-26T08:00:00+08:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "origin",
+      "origin": {
+        "platform": "weixin",
+        "chat_id": "o9cq800CPRSAkKxUIqviQu9ooeV0@im.wechat",
+        "chat_name": null,
+        "thread_id": null,
+        "user_id": "o9cq800CPRSAkKxUIqviQu9ooeV0@im.wechat"
+      },
+      "enabled_toolsets": null,
+      "workdir": null
     }
   ],
-  "updated_at": "2026-08-25T11:51:24.598982+08:00"
+  "updated_at": "2026-08-25T12:52:26.501240+08:00"
 }
