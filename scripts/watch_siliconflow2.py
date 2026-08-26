@@ -15,6 +15,7 @@ LOG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "siliconflow_watc
 API_KEY = "sk-oblkrvgfnogxovzpjhcrylgsfdoqjndunkoaqovxmwkruflz"
 seen_pids = set()
 last_balance = None
+last_bal_check = 0.0
 
 def log(msg):
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -51,11 +52,20 @@ def get_balance():
     try:
         r = requests.get("https://api.siliconflow.cn/v1/user/info",
                         headers={"Authorization": f"Bearer {API_KEY}"}, timeout=10)
-        d = r.json()
+        try:
+            d = r.json()
+        except Exception:
+            log(f"⚠️ 余额接口非JSON: HTTP {r.status_code} {r.text[:120]}")
+            return None
         if d.get("data"):
             return float(d["data"].get("balance", 0))
+        # 接口异常/已废弃：明确记录，避免静默失效
+        if r.status_code != 200:
+            log(f"⚠️ 余额接口异常: HTTP {r.status_code} {d.get('message','')} — 余额监控可能已失效")
+        else:
+            log(f"⚠️ 余额接口无data字段: {str(d)[:150]}")
     except Exception as e:
-        return None
+        log(f"⚠️ 余额查询失败: {e}")
     return None
 
 log("💰 余额+连接双监控启动")
@@ -72,8 +82,8 @@ while True:
         log(f"扫描异常: {e}")
 
     # 2. 查余额（每5分钟）
-    now = time.time()
-    if int(now) % 300 < 2:  # 每5分钟一次
+    if time.time() - last_bal_check >= 300:
+        last_bal_check = time.time()
         bal = get_balance()
         if bal is not None:
             if last_balance is None:
