@@ -23,6 +23,32 @@ def log(msg):
     with open(LOG, "a", encoding="utf-8") as f:
         f.write(line + "\n")
 
+def get_client_pid(client_port):
+    """通过客户端本地端口反查PID（netstat匹配）"""
+    try:
+        out = subprocess.run(["netstat", "-ano"], capture_output=True, text=True,
+                           timeout=5, errors="ignore", creationflags=0x08000000)
+        for line in out.stdout.split("\n"):
+            if f":{client_port}" in line and "127.0.0.1:443" in line:
+                parts = line.split()
+                if len(parts) >= 5:
+                    return parts[-1]
+    except:
+        pass
+    return "?"
+
+def get_cmdline(pid):
+    """获取进程命令行"""
+    if pid == "?":
+        return "?"
+    try:
+        out = subprocess.run(["wmic", "process", "where", f"ProcessId={pid}", "get", "CommandLine", "/format:list"],
+                           capture_output=True, text=True, timeout=8, errors="ignore", creationflags=0x08000000)
+        m = re.search(r"CommandLine=(.+)", out.stdout, re.DOTALL)
+        return m.group(1).strip()[:300] if m else "?"
+    except:
+        return "?"
+
 def get_conn_pid():
     """尝试找当前连接的本地PID（通过netstat匹配）"""
     try:
@@ -39,7 +65,11 @@ def get_conn_pid():
 
 def handle_client(conn, addr):
     """处理一个连接：记录请求头，然后转发到真实SiliconFlow"""
+    client_port = addr[1] if addr else "?"
     try:
+        # 立刻反查客户端PID（连接还活着）
+        pid = get_client_pid(client_port)
+        log(f"🚨 拦截到连接! 客户端端口={client_port} PID={pid}")
         # 读客户端发来的数据（HTTPS ClientHello 或 HTTP）
         conn.settimeout(10)
         data = conn.recv(8192)
@@ -47,14 +77,10 @@ def handle_client(conn, addr):
             conn.close()
             return
 
-        pid = get_conn_pid()
         # 尝试解析TLS ClientHello里的SNI（看请求的域名）
         sni = "?"
         try:
             if data and data[0] == 0x16:  # TLS handshake
-                # 解析ClientHello获取SNI
-                idx = data.find(b"\x00\x00") 
-                # 简化：找可打印域名
                 m = re.search(rb"([a-z0-9.-]+\.(?:cn|com|dev|net))", data)
                 if m:
                     sni = m.group(1).decode()
@@ -62,6 +88,10 @@ def handle_client(conn, addr):
             pass
 
         log(f"🚨 拦截到连接! PID={pid} | SNI={sni} | 数据{len(data)}字节")
+        # 查PID的命令行（如果是python/可疑进程）
+        cmdline = get_cmdline(pid)
+        if cmdline != "?":
+            log(f"    客户端命令行: {cmdline}")
 
         # 转发到真实SiliconFlow（轮换IP）
         for real_ip in REAL_IPS:
