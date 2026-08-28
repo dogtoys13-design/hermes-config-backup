@@ -4,7 +4,7 @@
 §
 红线：不删改Raw、不书籍压缩单卡、不摘抄要提炼、一卡一概念、不编造来源。
 §
-SiliconFlow铁律(8/21)：只准ASR(SenseVoice/TeleSpeech)，禁一切LLM，主模型DeepSeek。key在.scripts/.siliconflow_key仅ASR读。幽灵调用规律(阿念观察)：QQ消息/重连→40模型扫描+GLM-5.2，QQ静则不耗；监控watch_siliconflow3.py(按IP匹配,修复v2域名bug)+守护cron(6e5ea25af3c6)至8/31。账单异常先查gateway日志/state.db。
+SiliconFlow已弃用(8/28)：幽灵调用GLM-5.2累计扣¥40+(QQ活动触发，v4抓取证实非本机，来源未定位)，key全删+监控全停。抖音转写降级本地whisper(质量一般)。替代在线ASR待选(阿里云DashScope/百度)。
 §
 抖音流程：链接→TikHub解析(付费约7厘/次，key在douyin2wiki.py，绕Argus反爬；失败降级本地四套方案:种cookie/RENDER_DATA/换UA/重定向)→下载(重试+断点续传)→转写→纠错→存Raw(待审-前缀)→晚上审核做卡片→去前缀=已入库。待审清单=扫描待审-前缀。微信渠道链接通常能过。
 §
