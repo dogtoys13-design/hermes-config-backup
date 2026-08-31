@@ -4,7 +4,7 @@
 §
 红线：不删改Raw、不书籍压缩单卡、不摘抄要提炼、一卡一概念、不编造来源。
 §
-SiliconFlow已弃用(8/28)：幽灵调用GLM-5.2累计扣¥40+(QQ活动触发，v4抓取证实非本机，来源未定位)，key全删+监控全停。抖音转写降级本地whisper(质量一般)。替代在线ASR待选(阿里云DashScope/百度)。
+SiliconFlow已弃用(8/28)：幽灵调用GLM-5.2累计扣¥40+(QQ活动触发，非本机，来源未定位)，key全删。ASR已切阿里云百炼(transcribe_aliyun.py，qwen-audio-3.0-asr-flash-filetrans，上传→任务→fetch，免费额度，质量好)。
 §
 抖音流程：链接→TikHub解析(付费约7厘/次，key在douyin2wiki.py，绕Argus反爬；失败降级本地四套方案:种cookie/RENDER_DATA/换UA/重定向)→下载(重试+断点续传)→转写→纠错→存Raw(待审-前缀)→晚上审核做卡片→去前缀=已入库。待审清单=扫描待审-前缀。微信渠道链接通常能过。
 §
