@@ -19,7 +19,7 @@
 §
 OCR：scripts/ocr_image.py调智谱GLM-4.6V-Flash。纯文字继续DeepSeek。429限流重试。
 §
-语音转写：SiliconFlow云端ASR(scripts/transcribe_siliconflow.py)。主力FunAudioLLM/SenseVoiceSmall；备选TeleAI/TeleSpeechASR(方言/嘈杂低音质时切换)。抖音链接走douyin2wiki.py同套。转写后结合语境纠错。
+语音转写：阿里云百炼ASR(scripts/transcribe_aliyun.py，qwen-audio-3.0-asr-flash-filetrans，免费)。抖音走douyin2wiki.py(阿里云为主，whisper兜底)。转写后结合语境纠错。
 §
 个人背景：2017年做五金电商(拉手/合页/磁吸)，团队12-13人，月销300万。投资从全哥课程入门，价值投资。A股目标200万年化5%(茅台/泸州老窖吃股息)，美股目标200-300万年化20%(苹果/英伟达/甲骨文/微软)，总目标500万年化10%=50万被动收入通往财务自由。未来方向：电商AI化+出海。
 §
