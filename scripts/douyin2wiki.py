@@ -147,13 +147,13 @@ def process_douyin(url: str):
         wav_path = extract_audio(video_path)
         print(f"✅ 音频就绪: {os.path.getsize(wav_path)/1024:.0f}KB")
         
-        # 第四步：转写（SiliconFlow，失败降级本地whisper）
+        # 第四步：转写（阿里云ASR，失败降级本地whisper）
         try:
-            from transcribe_siliconflow import transcribe
-            print(f"🗣️ 转写中（SiliconFlow）...")
+            from transcribe_aliyun import transcribe
+            print(f"🗣️ 转写中（阿里云qwen-audio）...")
             text = transcribe(wav_path)
         except Exception as e:
-            print(f"⚠️ SiliconFlow转写失败({str(e)[:50]})，降级本地whisper...")
+            print(f"⚠️ 阿里云转写失败({str(e)[:50]})，降级本地whisper...")
             import whisper
             model = whisper.load_model("tiny", device="cpu")
             result = model.transcribe(wav_path, language="zh")
