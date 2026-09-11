@@ -4,7 +4,7 @@
 §
 SiliconFlow已弃用(8/28幽灵GLM-5.2扣¥40+)：key全删。ASR已切阿里云百炼(transcribe_aliyun.py，qwen-audio-3.0-asr-flash-filetrans，上传→任务→fetch，免费，质量好)。
 §
-抖音流程：链接→TikHub解析(付费约7厘/次，key在douyin2wiki.py，绕Argus反爬；失败降级本地四套方案:种cookie/RENDER_DATA/换UA/重定向)→下载(重试+断点续传)→转写→纠错→存Raw(待审-前缀)→晚上审核做卡片→去前缀=已入库。待审清单=扫描待审-前缀。微信渠道链接通常能过。
+抖音流程：链接→TikHub解析(付费约7厘/次，key在douyin2wiki.py，绕Argus反爬；首跑偶发400重试即可)→下载→转写→纠错→存Raw(待审-前缀)→晚上审核做卡片→去前缀=已入库。解析持续失败时阿念会发文字版，标来源直接存Raw跳过转写。待审清单=扫描待审-前缀。
 §
 RULES.md 在_system(系统)为完整规则备份，不每次读取。改规则时同步Memory+RULES.md。
 §
