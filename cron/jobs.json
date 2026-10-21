@@ -22,7 +22,7 @@
       "schedule_display": "0 21 * * *",
       "repeat": {
         "times": null,
-        "completed": 90
+        "completed": 91
       },
       "enabled": true,
       "state": "scheduled",
@@ -30,10 +30,10 @@
       "paused_reason": null,
       "created_at": "2026-07-22T21:38:07.495003+08:00",
       "next_run_at": "2026-10-22T21:00:00+08:00",
-      "last_run_at": "2026-10-20T21:01:56.432718+08:00",
+      "last_run_at": "2026-10-21T21:02:22.601144+08:00",
       "last_status": "ok",
       "last_error": null,
-      "last_delivery_error": null,
+      "last_delivery_error": "live adapter send failed: iLink sendmessage rate limited; cooldown active for 30.0s; live adapter delivery to weixin:o9cq800CPRSAkKxUIqviQu9ooeV0@im.wechat failed: iLink sendmessage rate limited; cooldown active for 30.0s; delivery error: Weixin send failed: iLink sendmessage rate limited; cooldown active for 30.0s",
       "deliver": "origin",
       "origin": {
         "platform": "weixin",
@@ -207,15 +207,15 @@
       "schedule_display": "every 60m",
       "repeat": {
         "times": null,
-        "completed": 2032
+        "completed": 2033
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-26T17:57:04.746611+08:00",
-      "next_run_at": "2026-10-21T22:01:57.442045+08:00",
-      "last_run_at": "2026-10-21T20:01:26.125451+08:00",
+      "next_run_at": "2026-10-21T23:03:58.523308+08:00",
+      "last_run_at": "2026-10-21T21:03:56.181691+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -232,5 +232,5 @@
       "fire_claim": null
     }
   ],
-  "updated_at": "2026-10-21T21:01:57.442045+08:00"
+  "updated_at": "2026-10-21T22:03:58.524286+08:00"
 }
