@@ -207,17 +207,17 @@
       "schedule_display": "every 60m",
       "repeat": {
         "times": null,
-        "completed": 2080
+        "completed": 2081
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-26T17:57:04.746611+08:00",
-      "next_run_at": "2026-10-23T23:40:51.087531+08:00",
-      "last_run_at": "2026-10-23T21:40:45.396501+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-10-24T01:40:53.159625+08:00",
+      "last_run_at": "2026-10-23T23:40:51.192176+08:00",
+      "last_status": "error",
+      "last_error": "Script timed out after 3600s: C:\\Users\\Administrator\\AppData\\Local\\hermes\\scripts\\github_backup.py",
       "last_delivery_error": null,
       "deliver": "local",
       "origin": {
@@ -232,5 +232,5 @@
       "fire_claim": null
     }
   ],
-  "updated_at": "2026-10-23T22:40:51.088503+08:00"
+  "updated_at": "2026-10-24T00:40:53.159625+08:00"
 }
